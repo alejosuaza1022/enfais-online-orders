@@ -1,11 +1,9 @@
-package com.koombea.techtest.models;
+package com.koombea.techtest.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
@@ -38,7 +36,7 @@ public class ImportedFile {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy ="importedFile" )
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "importedFile")
     @ToString.Exclude
     private List<Contact> contacts;
 

@@ -1,4 +1,4 @@
-package com.koombea.techtest.models;
+package com.koombea.techtest.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,40 +20,45 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Entity
-@Table(name = "falied_contacts")
+@Table(name = "contacts")
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FailedContact {
+public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String dateOfBirth;
 
+    @Column(nullable = false)
     private String phone;
 
+    @Column(nullable = false)
     private String address;
 
+    @Column(nullable = false)
     private String creditCardNumber;
 
+    @Column(nullable = false)
     private String creditCardNetwork;
 
+    @Column(nullable = false)
     private String email;
-
-    private String errors;
-
-    @ManyToOne(optional = false)
-    private ImportedFile importedFile;
 
     @ManyToOne(optional = false)
     private User user;
+
+    @ManyToOne(optional = false)
+    private ImportedFile importedFile;
 
     @CreatedDate
     private Instant createdAt;
@@ -63,8 +68,7 @@ public class FailedContact {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Contact contact = (Contact) o;
-        return id != null && Objects.equals(id, contact.getId()) ||
-                email != null && Objects.equals(email, contact.getEmail());
+        return id != null && Objects.equals(id, contact.getId()) ||  Objects.equals(email, contact.getEmail());
     }
 
     @Override
