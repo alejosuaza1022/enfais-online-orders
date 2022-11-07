@@ -16,5 +16,6 @@ public final class Strings {
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
     public static final String AUTHORIZATION_BODY = "Authorization";
     public static final String ROLE_USER = "USER";
-
+    public static final String CACHE_USER = "users";
+    public static final String CACHE_API_HIT_COUNT = "apiHitCount";
 }

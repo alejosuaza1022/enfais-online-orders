@@ -74,14 +74,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Cacheable(value = "user", key = "#id")
+    @Cacheable(value = Strings.CACHE_USER, key = "#id")
     @Transactional(readOnly = true)
     public UserDto findByIdDto(Long id) {
+        System.out.println("asf");
         return modelMapper.map(this.findById(id), UserDto.class);
     }
 
     @Override
-    @CachePut(value = "user", key = "#id")
+    @CachePut(value = Strings.CACHE_USER, key = "#id")
     @Transactional
     public UserDto updateUserById(Long id, UserUpdatePayload payload) {
         User user = this.findById(id);

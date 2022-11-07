@@ -1,7 +1,7 @@
-package com.enfasis.onlineorders.security.jwtauth;
+package com.enfasis.onlineorders.security.filter;
 
+import com.enfasis.onlineorders.service.RateLimiterService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -13,10 +13,13 @@ import java.io.IOException;
 
 @Component
 @AllArgsConstructor
-public class CustomFilter extends OncePerRequestFilter {
+public class RateLimitFilter extends OncePerRequestFilter {
+    private RateLimiterService rateLimiterService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        var exx = SecurityContextHolder.getContext().getAuthentication();
-        filterChain.doFilter(request,response);
+        rateLimiterService.getApiHitCount(request.getRemoteAddr());
+        rateLimiterService.incrementApiHitCount(request.getRemoteAddr());
+        filterChain.doFilter(request, response);
     }
 }

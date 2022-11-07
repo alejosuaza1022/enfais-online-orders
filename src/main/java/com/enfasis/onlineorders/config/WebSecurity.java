@@ -1,6 +1,6 @@
 package com.enfasis.onlineorders.config;
 
-import com.enfasis.onlineorders.security.jwtauth.CustomFilter;
+import com.enfasis.onlineorders.security.filter.RateLimitFilter;
 import com.enfasis.onlineorders.security.jwtauth.JwtAuthEntryPoint;
 import com.enfasis.onlineorders.security.jwtauth.JwtRequestFilter;
 import lombok.AllArgsConstructor;
@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 
@@ -21,7 +22,7 @@ public class WebSecurity   {
 
     private JwtRequestFilter jwtRequestFilter;
     private JwtAuthEntryPoint jwtAuthEntryPoint;
-    private CustomFilter customFilter;
+    private RateLimitFilter rateLimitFilter;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -37,8 +38,8 @@ public class WebSecurity   {
                 .exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint )
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        httpSecurity.addFilterBefore(rateLimitFilter, ChannelProcessingFilter.class);
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        httpSecurity.addFilterBefore(customFilter, SecurityContextHolderAwareRequestFilter.class);
         return httpSecurity.build();
     }
 }
