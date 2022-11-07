@@ -1,5 +1,6 @@
 package com.enfasis.onlineorders.exeption;
 
+import com.enfasis.onlineorders.exeption.custom.ResourceNotFoundException;
 import com.enfasis.onlineorders.exeption.custom.UniqueConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class ControllerExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({UniqueConstraintViolationException.class, UsernameNotFoundException.class})
+    @ExceptionHandler({UniqueConstraintViolationException.class, UsernameNotFoundException.class, ResourceNotFoundException.class})
     public ResponseEntity<ErrorMessage> handleUniqueConstraintOrNotExistingException(Exception ex, WebRequest request) {
         ErrorMessage message = new ErrorMessage(
                 HttpStatus.BAD_REQUEST.value(),

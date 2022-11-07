@@ -1,4 +1,4 @@
-package com.enfasis.onlineorders.dto;
+package com.enfasis.onlineorders.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserCreated {
+public class UserPrincipalSecurity {
     private Long id;
     private String email;
-    private String message;
 }

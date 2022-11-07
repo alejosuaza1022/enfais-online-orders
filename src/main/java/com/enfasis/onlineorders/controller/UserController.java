@@ -1,17 +1,15 @@
 package com.enfasis.onlineorders.controller;
 
-import com.enfasis.onlineorders.constants.Permissions;
 import com.enfasis.onlineorders.constants.Routes;
-import com.enfasis.onlineorders.dto.UserCreated;
-import com.enfasis.onlineorders.dto.UserDto;
-import com.enfasis.onlineorders.dto.UserPrincipalSecurity;
+import com.enfasis.onlineorders.dto.user.UserCreated;
+import com.enfasis.onlineorders.dto.user.UserDto;
+import com.enfasis.onlineorders.dto.user.UserPrincipalSecurity;
 import com.enfasis.onlineorders.payload.UserPayload;
 import com.enfasis.onlineorders.payload.UserUpdatePayload;
 import com.enfasis.onlineorders.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +32,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
 
-    @GetMapping("{id}")
+    @GetMapping(Routes.ID)
     public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findByIdDto(id));
     }
@@ -46,9 +44,4 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserById(userPrincipalSecurity.getId(), payload));
     }
 
-    @GetMapping
-    @PreAuthorize(Permissions.AUTHORITY_ORDERS_VIEW_ALL)
-    public String example() {
-        return "Just view all orders permission";
-    }
 }

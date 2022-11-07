@@ -17,5 +17,9 @@ public final class Strings {
     public static final String AUTHORIZATION_BODY = "Authorization";
     public static final String ROLE_USER = "USER";
     public static final String CACHE_USER = "users";
+    public static final String CACHE_PRODUCT = "products";
     public static final String CACHE_API_HIT_COUNT = "apiHitCount";
+    public static final String CACHE_ORDER = "orders";
+    public static final String CACHE_ALL_ORDERS = "all_orders";
+    public static final String PRODUCT_NOT_FOUND = "The product was not found on our DB.";
 }

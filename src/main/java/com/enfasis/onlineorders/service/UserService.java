@@ -1,7 +1,8 @@
 package com.enfasis.onlineorders.service;
 
-import com.enfasis.onlineorders.dto.UserCreated;
-import com.enfasis.onlineorders.dto.UserDto;
+import com.enfasis.onlineorders.dto.user.UserCreated;
+import com.enfasis.onlineorders.dto.user.UserDto;
+import com.enfasis.onlineorders.dto.user.UserPrincipalSecurity;
 import com.enfasis.onlineorders.model.User;
 import com.enfasis.onlineorders.payload.UserPayload;
 import com.enfasis.onlineorders.payload.UserUpdatePayload;
@@ -17,5 +18,9 @@ public interface UserService {
     UserDto findByIdDto(Long id);
 
     UserDto updateUserById(Long id, UserUpdatePayload payload);
+
+    User getUserFromContext();
+
+    UserPrincipalSecurity getUserPrincipalFromContext();
 
 }

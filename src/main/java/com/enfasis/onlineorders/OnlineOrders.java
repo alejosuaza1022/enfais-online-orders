@@ -43,10 +43,22 @@ public class OnlineOrders {
                 new HashMap<>();
         cacheConfigurations.put(
                 Strings.CACHE_API_HIT_COUNT, defaultCacheConfig.
-                        entryTtl(Duration.ofSeconds(30))
+                        entryTtl(Duration.ofSeconds(5))
         );
         cacheConfigurations.put(
                 Strings.CACHE_USER, defaultCacheConfig.
+                        entryTtl(Duration.ofSeconds(30))
+        );
+        cacheConfigurations.put(
+                Strings.CACHE_PRODUCT, defaultCacheConfig.
+                        entryTtl(Duration.ofSeconds(30))
+        );
+        cacheConfigurations.put(
+                Strings.CACHE_ALL_ORDERS, defaultCacheConfig.
+                        entryTtl(Duration.ofSeconds(15))
+        );
+        cacheConfigurations.put(
+                Strings.CACHE_ORDER, defaultCacheConfig.
                         entryTtl(Duration.ofSeconds(30))
         );
         return RedisCacheManager.builder(connectionFactory).

@@ -1,7 +1,7 @@
 package com.enfasis.onlineorders.utils;
 
-import com.enfasis.onlineorders.dto.UserCreated;
-import com.enfasis.onlineorders.dto.UserPrincipalSecurity;
+import com.enfasis.onlineorders.dto.user.UserCreated;
+import com.enfasis.onlineorders.dto.user.UserPrincipalSecurity;
 import com.enfasis.onlineorders.model.User;
 import com.enfasis.onlineorders.payload.UserPayload;
 import com.enfasis.onlineorders.constants.Strings;

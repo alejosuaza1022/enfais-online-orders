@@ -4,9 +4,9 @@ import com.enfasis.onlineorders.constants.StringExceptions;
 import com.enfasis.onlineorders.constants.Strings;
 import com.enfasis.onlineorders.dao.RoleDao;
 import com.enfasis.onlineorders.dao.UserDao;
-import com.enfasis.onlineorders.dto.UserCreated;
-import com.enfasis.onlineorders.dto.UserDto;
-import com.enfasis.onlineorders.dto.UserPrincipalSecurity;
+import com.enfasis.onlineorders.dto.user.UserCreated;
+import com.enfasis.onlineorders.dto.user.UserDto;
+import com.enfasis.onlineorders.dto.user.UserPrincipalSecurity;
 import com.enfasis.onlineorders.exeption.custom.UniqueConstraintViolationException;
 import com.enfasis.onlineorders.model.Permission;
 import com.enfasis.onlineorders.model.Role;
@@ -20,6 +20,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -77,7 +78,6 @@ public class UserServiceImpl implements UserService {
     @Cacheable(value = Strings.CACHE_USER, key = "#id")
     @Transactional(readOnly = true)
     public UserDto findByIdDto(Long id) {
-        System.out.println("asf");
         return modelMapper.map(this.findById(id), UserDto.class);
     }
 
@@ -90,6 +90,18 @@ public class UserServiceImpl implements UserService {
             user.setEmail(payload.getEmail());
         return modelMapper.map(userDao.save(user), UserDto.class);
 
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public User getUserFromContext() {
+        return this.findById(getUserPrincipalFromContext().getId());
+    }
+
+    @Override
+    public UserPrincipalSecurity getUserPrincipalFromContext() {
+        return (UserPrincipalSecurity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
 
