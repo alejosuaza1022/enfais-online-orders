@@ -4,6 +4,7 @@ import com.enfasis.onlineorders.constants.StringExceptions;
 import com.enfasis.onlineorders.constants.Strings;
 import com.enfasis.onlineorders.dao.RoleDao;
 import com.enfasis.onlineorders.dao.UserDao;
+import com.enfasis.onlineorders.dto.order.OrderProjection;
 import com.enfasis.onlineorders.dto.user.UserCreated;
 import com.enfasis.onlineorders.dto.user.UserDto;
 import com.enfasis.onlineorders.dto.user.UserPrincipalSecurity;

@@ -5,6 +5,7 @@ import com.enfasis.onlineorders.constants.Strings;
 import com.enfasis.onlineorders.dao.OrderDao;
 import com.enfasis.onlineorders.dto.order.OrderCreateDto;
 import com.enfasis.onlineorders.dto.order.OrderDto;
+import com.enfasis.onlineorders.dto.order.OrderProjection;
 import com.enfasis.onlineorders.dto.product.ProductForOrderDto;
 import com.enfasis.onlineorders.exeption.custom.ResourceNotFoundException;
 import com.enfasis.onlineorders.model.Order;
@@ -57,6 +58,11 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> getAllOrders() {
         return orderDao.findAll().stream().
                 map(order -> modelMapper.map(order, OrderDto.class)).toList();
+    }
+
+    @Override
+    public List<OrderProjection> getOrdersByUserId(Long userId) {
+        return orderDao.findAllByUserId(userId);
     }
 
 
