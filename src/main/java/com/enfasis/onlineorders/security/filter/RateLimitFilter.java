@@ -31,7 +31,6 @@ public class RateLimitFilter extends OncePerRequestFilter {
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             }
         } else {
-            rateLimiterService.incrementApiHitCount(request.getRemoteAddr());
             filterChain.doFilter(request, response);
         }
     }

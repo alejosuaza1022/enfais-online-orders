@@ -2,6 +2,8 @@ package com.enfasis.onlineorders.exeption;
 
 import com.enfasis.onlineorders.exeption.custom.ResourceNotFoundException;
 import com.enfasis.onlineorders.exeption.custom.UniqueConstraintViolationException;
+import com.enfasis.onlineorders.service.RateLimiterService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -11,6 +13,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.Date;
@@ -18,7 +21,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
+@AllArgsConstructor
 public class ControllerExceptionHandler {
+    private RateLimiterService rateLimiterService;
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationErrorException(MethodArgumentNotValidException ex, WebRequest request) {
         Map<String, String> errors = ex.getBindingResult().getAllErrors().stream().
@@ -44,7 +50,7 @@ public class ControllerExceptionHandler {
                 new Date(),
                 ex.getMessage(),
                 request.getDescription(false));
-
+        rateLimiterService.incrementApiHitCount(((ServletWebRequest) request).getRequest().getRemoteAddr()) ;
         return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
     }
     @ExceptionHandler(AccessDeniedException.class)
@@ -54,7 +60,6 @@ public class ControllerExceptionHandler {
                 new Date(),
                 ex.getMessage(),
                 request.getDescription(false));
-
         return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
     }
 

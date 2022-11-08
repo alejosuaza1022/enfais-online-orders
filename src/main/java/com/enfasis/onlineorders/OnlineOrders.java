@@ -43,7 +43,7 @@ public class OnlineOrders {
                 new HashMap<>();
         cacheConfigurations.put(
                 Strings.CACHE_API_HIT_COUNT, defaultCacheConfig.
-                        entryTtl(Duration.ofSeconds(5))
+                        entryTtl(Duration.ofSeconds(60))
         );
         cacheConfigurations.put(
                 Strings.CACHE_USER, defaultCacheConfig.
